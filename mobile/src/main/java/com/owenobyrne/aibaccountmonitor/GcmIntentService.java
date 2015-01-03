@@ -13,9 +13,10 @@ import android.util.Log;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 public class GcmIntentService extends IntentService {
-    public static final int NOTIFICATION_ID = 1;
     private NotificationManager mNotificationManager;
     static final String TAG = "GCMDemo";
+
+    private int notificationId = 1;
 
     NotificationCompat.Builder builder;
 
@@ -80,7 +81,7 @@ public class GcmIntentService extends IntentService {
                         .setContentText(m);
 
         mBuilder.setContentIntent(contentIntent);
-        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        mNotificationManager.notify(notificationId++, mBuilder.build());
     }
 
     private void sendNotification(String msg) {
@@ -99,6 +100,7 @@ public class GcmIntentService extends IntentService {
                         .setContentText(msg);
 
         mBuilder.setContentIntent(contentIntent);
-        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        // no need to increment the id here - if another one comes through it should replace this one.
+        mNotificationManager.notify(notificationId, mBuilder.build());
     }
 }
